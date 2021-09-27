@@ -30,4 +30,4 @@ for var in "$@"; do
 done
 
 DIR=$(dirname $0)
-"$DIR"/xcode-git "${ARGS[@]}"
+exec -a "$0" "$DIR"/xcode-git "${ARGS[@]}"

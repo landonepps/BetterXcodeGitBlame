@@ -13,12 +13,14 @@ for i in "$@" ; do
 done
 
 XCODE_BIN_DIR="`xcode-select -p`/usr/bin"
+GIT_CORE_XCODE_GIT="`xcode-select -p`/usr/libexec/git-core/xcode-git"
 XCODE_GIT="$XCODE_BIN_DIR/xcode-git"
 GIT="$XCODE_BIN_DIR/git"
 GIT_TEMP="/tmp/git-wrapper"
 
 uninstall () {
   sudo mv -f "$XCODE_GIT" "$GIT"
+  sudo rm -f "$GIT_CORE_XCODE_GIT"
 }
 echo_warn_sudo () {
   echo 'WARNING: The contents of Xcode will be modified.'
@@ -65,11 +67,13 @@ else
     echo_warn_sudo
   fi
 
-  sudo -- mv "$GIT" "$XCODE_GIT"
-  sudo -- mv "$GIT_TEMP" "$GIT"
-  
+  mv "$GIT" "$XCODE_GIT"
+  mv "$GIT_TEMP" "$GIT"
+
+  ln -s "../../bin/xcode-git" "$GIT_CORE_XCODE_GIT"
+
   # In the remote install case, the downloaded git script won't have execute permission.
-  sudo -- chmod +x "$GIT"
+  chmod +x "$GIT"
 fi
 echo 'All done!'
 
