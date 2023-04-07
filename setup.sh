@@ -29,6 +29,8 @@ cat > $PLIST_FILE << _EOF
 	<dict>
 		<key>Hour</key>
 		<integer>6</integer>
+		<key>Minute</key>
+		<integer>0</integer>
 	</dict>
 </dict>
 </plist>
